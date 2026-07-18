@@ -1,0 +1,38 @@
+[gd_scene format=3 uid="uid://bq4byiv16eime"]
+
+[ext_resource type="Script" uid="uid://bjixespgf4ybd" path="res://addons/SecondOrderDynamics/Animator/SodRemotePosition2D.cs" id="1_d0kg7"]
+[ext_resource type="Texture2D" uid="uid://bh6tsmbupjkwd" path="res://addons/SecondOrderDynamics/Icons/SodParams.svg" id="2_6x8du"]
+[ext_resource type="Script" uid="uid://cpyqqgoprjn5d" path="res://addons/SecondOrderDynamics/SodParams.cs" id="2_153rd"]
+[ext_resource type="Texture2D" uid="uid://cad82o40u0sah" path="res://icon.svg" id="4_chq62"]
+
+[sub_resource type="Resource" id="Resource_6x8du"]
+script = ExtResource("2_153rd")
+Zeta = 0.37
+Response = 1.0
+metadata/_custom_type_script = "uid://cpyqqgoprjn5d"
+
+[sub_resource type="Resource" id="Resource_chq62"]
+script = ExtResource("2_153rd")
+metadata/_custom_type_script = "uid://cpyqqgoprjn5d"
+
+[node name="Transform2d" type="Node2D" unique_id=1626683008]
+
+[node name="Icon" type="Sprite2D" parent="." unique_id=287331820]
+position = Vector2(633, 381)
+rotation = 0.30303878
+scale = Vector2(1.0742185, 1.0742185)
+texture = ExtResource("4_chq62")
+
+[node name="SodRemoteTransform2D" type="Node2D" parent="." unique_id=2072307890]
+position = Vector2(633, 381)
+rotation = 0.30280647
+script = ExtResource("1_d0kg7")
+Following = NodePath("../Icon")
+RunInEditor = true
+PositionParams = SubResource("Resource_6x8du")
+RotationParams = SubResource("Resource_chq62")
+metadata/_custom_type_script = "uid://bjixespgf4ybd"
+
+[node name="SodParams" type="Sprite2D" parent="SodRemoteTransform2D" unique_id=523883890]
+scale = Vector2(0.19812503, 0.19812503)
+texture = ExtResource("2_6x8du")
