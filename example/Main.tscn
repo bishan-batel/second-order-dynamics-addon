@@ -1,0 +1,30 @@
+[gd_scene format=3 uid="uid://c5rkyk6orxwe0"]
+
+[ext_resource type="Script" uid="uid://dvp423jb6icgp" path="res://addons/SecondOrderDynamics/Animator/SodAnimator.cs" id="1_tlff6"]
+[ext_resource type="Script" uid="uid://cpyqqgoprjn5d" path="res://addons/SecondOrderDynamics/SodParams.cs" id="2_1qgvb"]
+[ext_resource type="Texture2D" uid="uid://cploaeae0tqis" path="res://addons/at-icons/node/club.svg" id="3_bl11y"]
+
+[sub_resource type="Resource" id="Resource_jlbjj"]
+script = ExtResource("2_1qgvb")
+Zeta = 0.2
+metadata/_custom_type_script = "uid://cpyqqgoprjn5d"
+
+[node name="Main" type="Node2D" unique_id=517726004]
+rotation = -0.02
+skew = -0.02
+
+[node name="SodAnimator" type="Node" parent="." unique_id=1326959813]
+script = ExtResource("1_tlff6")
+ValueType = 5
+TargetValue = Vector2(200, 235.71)
+UsePhysicsProcess = false
+RunInEditor = true
+SetterNode = NodePath("../Club")
+SetterProperty = &"global_position"
+Params = SubResource("Resource_jlbjj")
+metadata/_custom_type_script = "uid://dvp423jb6icgp"
+
+[node name="Club" type="Sprite2D" parent="." unique_id=913661626]
+position = Vector2(190.45746, 239.71065)
+scale = Vector2(4.4177837, 4.4177837)
+texture = ExtResource("3_bl11y")
