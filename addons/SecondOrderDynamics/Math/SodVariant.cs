@@ -4,9 +4,15 @@ using Godot;
 
 namespace SecondOrderDynamics.Math;
 
+/// <summary>
+/// Second order system for animating (almost) any <see cref="Variant"/> type.
+/// </summary>
+/// <param name="params"></param>
+/// <param name="x0"></param>
 public class SodVariant(SodParams? @params, Variant x0) : SecondOrderDynamics<Variant>(@params, x0) {
   SecondOrderDynamicsBase? _sod;
 
+  /// <inheritdoc />
   public override Variant Default {
     get {
       return _sod switch {
@@ -19,6 +25,7 @@ public class SodVariant(SodParams? @params, Variant x0) : SecondOrderDynamics<Va
     }
   }
 
+  /// <inheritdoc />
   public override Variant UpdateInternal(float delta, Variant x, Variant? xd = null) {
     if (Params is null || !IsValidType(x.VariantType) || xd.HasValue && !IsValidType(xd.Value.VariantType)) {
       return x;
@@ -81,11 +88,17 @@ public class SodVariant(SodParams? @params, Variant x0) : SecondOrderDynamics<Va
     };
   }
 
+  /// <inheritdoc />
   public override bool IsValid(Variant value) {
     return true;
   }
 
-  public bool IsValidType(Variant.Type type) {
+  /// <summary>
+  /// Checks whether the given variant type is supported by this Sod
+  /// </summary>
+  /// <param name="type"></param>
+  /// <returns></returns>
+  public static bool IsValidType(Variant.Type type) {
     return type switch {
       Variant.Type.Float or
         Variant.Type.Vector2 or

@@ -8,14 +8,23 @@ namespace SecondOrderDynamics.Math;
 /// Second Order System operating on a single number
 /// </summary>
 public class SodFloat : SecondOrderDynamics<float> {
+  /// <summary>
+  /// A flag that, when active, modifies the simulation to use angular differences - this is desirable when interpolating angles.
+  /// For more complex rotations, consider the use of <see cref="SodQuaternion"/>
+  /// </summary>
+  public bool UseAngleDifference { set; get; }
+
+  /// <inheritdoc />
   public SodFloat(float freq = 1, float zeta = 1, float response = 1, float x0 = 0)
     : base(freq, zeta, response, x0) {
   }
 
-  public SodFloat(SecondOrderDynamics.SodParams @params, float x0 = 0)
+  /// <inheritdoc />
+  public SodFloat(SodParams @params, float x0 = 0)
     : base(@params, x0) {
   }
 
+  /// <inheritdoc />
   public override float UpdateInternal(float delta, float x, float? xd = null) {
     if (Params is null) return Y;
 
@@ -30,6 +39,7 @@ public class SodFloat : SecondOrderDynamics<float> {
     return Y;
   }
 
+  /// <inheritdoc />
   public override bool IsValid(float value) {
     return float.IsFinite(value);
   }
