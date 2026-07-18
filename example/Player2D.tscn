@@ -1,0 +1,100 @@
+[gd_scene format=3 uid="uid://57l330q7tufd"]
+
+[ext_resource type="Texture2D" uid="uid://cad82o40u0sah" path="res://icon.svg" id="1_jp81o"]
+[ext_resource type="Script" uid="uid://bjixespgf4ybd" path="res://addons/SecondOrderDynamics/Animator/SodRemotePosition2D.cs" id="1_o5b4g"]
+[ext_resource type="Script" uid="uid://cpyqqgoprjn5d" path="res://addons/SecondOrderDynamics/SodParams.cs" id="2_vw37u"]
+
+[sub_resource type="Resource" id="Resource_o5b4g"]
+script = ExtResource("2_vw37u")
+Frequency = 1.96
+Zeta = 0.38
+Response = 1.0
+metadata/_custom_type_script = "uid://cpyqqgoprjn5d"
+
+[sub_resource type="Resource" id="Resource_vw37u"]
+script = ExtResource("2_vw37u")
+Frequency = 1.673
+Zeta = 0.561
+metadata/_custom_type_script = "uid://cpyqqgoprjn5d"
+
+[sub_resource type="Resource" id="Resource_o47kv"]
+script = ExtResource("2_vw37u")
+Response = 1.0
+metadata/_custom_type_script = "uid://cpyqqgoprjn5d"
+
+[sub_resource type="GDScript" id="GDScript_fayhq"]
+script/source = "@tool
+extends Line2D
+
+@export var pin: Node2D
+
+
+# Called every frame. 'delta' is the elapsed time since the previous frame.
+func _process(delta: float) -> void:
+	if pin == null:
+		return
+	points = [ Vector2(0, 0), to_local(pin.global_position)]
+"
+
+[node name="Player2d" type="Node2D" unique_id=1849134754]
+
+[node name="Player" type="Marker2D" parent="." unique_id=161899757]
+position = Vector2(402, 367)
+
+[node name="Body" type="Sprite2D" parent="Player" unique_id=1764157266]
+position = Vector2(0, -12)
+scale = Vector2(0.16, 0.3)
+texture = ExtResource("1_jp81o")
+
+[node name="Head" type="Marker2D" parent="Player" unique_id=2019102606]
+position = Vector2(0, -51)
+gizmo_extents = 5.0
+
+[node name="SodRemotePosition2D" type="Node2D" parent="Player/Head" unique_id=935698006]
+script = ExtResource("1_o5b4g")
+Following = NodePath("..")
+RunInEditor = true
+PositionParams = SubResource("Resource_o5b4g")
+RotationParams = SubResource("Resource_vw37u")
+metadata/_custom_type_script = "uid://bjixespgf4ybd"
+
+[node name="Icon" type="Sprite2D" parent="Player/Head/SodRemotePosition2D" unique_id=1918106742]
+scale = Vector2(0.3, 0.3)
+texture = ExtResource("1_jp81o")
+
+[node name="Leg Left" type="Marker2D" parent="Player" unique_id=1305292600]
+position = Vector2(-10, 0)
+gizmo_extents = 5.0
+
+[node name="SodRemotePosition2D" type="Node2D" parent="Player/Leg Left" unique_id=149097078]
+position = Vector2(0.00015258789, 0.00015258789)
+script = ExtResource("1_o5b4g")
+Following = NodePath("..")
+RunInEditor = true
+PositionParams = SubResource("Resource_o47kv")
+UpdateRotation = false
+metadata/_custom_type_script = "uid://bjixespgf4ybd"
+
+[node name="Leg" type="Line2D" parent="Player/Leg Left/SodRemotePosition2D" unique_id=2066091257 node_paths=PackedStringArray("pin")]
+position = Vector2(-7.9130554, 20.07788)
+points = PackedVector2Array(0, 0, 7.912903, -20.078033)
+width = 5.0
+script = SubResource("GDScript_fayhq")
+pin = NodePath("../..")
+
+[node name="Left Foot" type="Marker2D" parent="Player/Leg Left/SodRemotePosition2D/Leg" unique_id=1902423763]
+position = Vector2(0.0086759105, 1.9999812)
+
+[node name="Leg Right" type="Marker2D" parent="Player" unique_id=1980557415]
+position = Vector2(10, 0)
+gizmo_extents = 5.0
+
+[node name="Leg" type="Line2D" parent="Player/Leg Right" unique_id=128782056 node_paths=PackedStringArray("pin")]
+position = Vector2(7.913, 20.078)
+points = PackedVector2Array(0, 0, -7.9129944, -20.078003)
+width = 5.0
+script = SubResource("GDScript_fayhq")
+pin = NodePath("..")
+
+[node name="Left Foot" type="Marker2D" parent="Player/Leg Right/Leg" unique_id=1027889620]
+position = Vector2(0.18659297, 2.8436997)

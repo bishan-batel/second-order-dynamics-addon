@@ -5,7 +5,7 @@
 
 [sub_resource type="Resource" id="Resource_jlbjj"]
 script = ExtResource("2_1qgvb")
-Frequency = 1.546
+Frequency = 1.898
 Zeta = 0.262
 Response = -0.27
 metadata/_custom_type_script = "uid://cpyqqgoprjn5d"

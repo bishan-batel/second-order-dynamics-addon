@@ -19,7 +19,16 @@ public partial class SodRemotePosition2D : Node2D {
   /// The node that this will be interpolating to. Note that this is the opposite of how RemoteTransform2D works.
   /// </summary>
   [Export(PropertyHint.NodeType, nameof(Node2D))]
-  public NodePath? Following { set; get; }
+  public NodePath? Following {
+    set {
+      _following = value;
+      #if TOOLS
+      UpdateConfigurationWarnings();
+      NotifyPropertyListChanged();
+      #endif
+    }
+    get => _following;
+  }
 
   /// <summary>
   /// Whether to simulate this system when running in-editor. Note if this can run in the editor this forces
@@ -31,7 +40,12 @@ public partial class SodRemotePosition2D : Node2D {
       _runInEditor = value;
       if (_runInEditor) _usePhysicsProcess = false;
 
+
       #if TOOLS
+      if (Engine.IsEditorHint() && !RunInEditor && TryGetFollowing(out Node2D following)) {
+        _forceTransformToFollowing(following);
+      }
+
       NotifyPropertyListChanged();
       #endif
     }
@@ -55,17 +69,17 @@ public partial class SodRemotePosition2D : Node2D {
   /// </summary>
   [ExportGroup("Transform")]
   [Export]
-  public bool Local {
+  public bool UseLocalCoordinates {
     set {
-      if (_local != value) {
+      if (_useLocalCoordinates != value) {
         _sodPosition = null;
         _sodRotation = null;
         _sodScale = null;
       }
 
-      _local = value;
+      _useLocalCoordinates = value;
     }
-    get => _local;
+    get => _useLocalCoordinates;
   }
 
 
@@ -79,6 +93,7 @@ public partial class SodRemotePosition2D : Node2D {
       _shouldUpdatePosition = value;
       #if TOOLS
       UpdateConfigurationWarnings();
+      NotifyPropertyListChanged();
       #endif
     }
     get => _shouldUpdatePosition;
@@ -108,6 +123,7 @@ public partial class SodRemotePosition2D : Node2D {
       _shouldUpdateRotation = value;
       #if TOOLS
       UpdateConfigurationWarnings();
+      NotifyPropertyListChanged();
       #endif
     }
     get => _shouldUpdateRotation;
@@ -137,6 +153,7 @@ public partial class SodRemotePosition2D : Node2D {
       _shouldUpdateScale = value;
       #if TOOLS
       UpdateConfigurationWarnings();
+      NotifyPropertyListChanged();
       #endif
     }
     get => _shouldUpdateScale;
@@ -172,7 +189,8 @@ public partial class SodRemotePosition2D : Node2D {
   SodVector2? _sodScale;
   bool _shouldUpdateScale;
   SodParams? _scaleParams;
-  bool _local;
+  bool _useLocalCoordinates;
+  NodePath? _following;
 
   void _updateProcessMode() {
     bool anyActive = UpdatePosition || UpdateRotation || UpdateScale;
@@ -195,11 +213,24 @@ public partial class SodRemotePosition2D : Node2D {
     return false;
   }
 
+  /// <summary>
+  /// Default constructor
+  /// </summary>
+  public SodRemotePosition2D() {
+    SetNotifyTransform(Engine.IsEditorHint());
+  }
+
   /// <inheritdoc />
   public override void _EnterTree() {
     _sodPosition = null;
     _sodRotation = null;
     _sodScale = null;
+
+    #if TOOLS
+    if (Engine.IsEditorHint() && !RunInEditor && TryGetFollowing(out Node2D following)) {
+      _forceTransformToFollowing(following);
+    }
+    #endif
   }
 
   /// <inheritdoc />
@@ -226,18 +257,18 @@ public partial class SodRemotePosition2D : Node2D {
   void _update(float delta) {
     if (!TryGetFollowing(out Node2D following)) return;
 
-    if (UpdatePosition && _updatePosition(delta, out Vector2 position, Local ? following.Position : following.GlobalPosition)) {
-      if (Local) Position = position;
+    if (UpdatePosition && _updatePosition(delta, out Vector2 position, UseLocalCoordinates ? following.Position : following.GlobalPosition)) {
+      if (UseLocalCoordinates) Position = position;
       else GlobalPosition = position;
     }
 
-    if (UpdateRotation && _updateRotation(delta, out float rotation, Local ? following.Rotation : following.GlobalRotation)) {
-      if (Local) Rotation = rotation;
+    if (UpdateRotation && _updateRotation(delta, out float rotation, UseLocalCoordinates ? following.Rotation : following.GlobalRotation)) {
+      if (UseLocalCoordinates) Rotation = rotation;
       else GlobalRotation = rotation;
     }
 
-    if (UpdateScale && _updateScale(delta, out Vector2 scale, Local ? following.Scale : following.GlobalScale)) {
-      if (Local) Scale = scale;
+    if (UpdateScale && _updateScale(delta, out Vector2 scale, UseLocalCoordinates ? following.Scale : following.GlobalScale)) {
+      if (UseLocalCoordinates) Scale = scale;
       else GlobalScale = scale;
     }
   }
@@ -290,6 +321,21 @@ public partial class SodRemotePosition2D : Node2D {
       return;
     }
 
+    if (UpdatePosition && name == Node2D.PropertyName.Position) {
+      property["usage"] = (int)PropertyUsageFlags.NoEditor;
+      return;
+    }
+
+    if (UpdateRotation && name == Node2D.PropertyName.Rotation) {
+      property["usage"] = (int)PropertyUsageFlags.NoEditor;
+      return;
+    }
+
+    if (UpdateScale && name == Node2D.PropertyName.Scale) {
+      property["usage"] = (int)PropertyUsageFlags.NoEditor;
+      return;
+    }
+
     base._ValidateProperty(property);
   }
 
@@ -315,4 +361,27 @@ public partial class SodRemotePosition2D : Node2D {
 
     return warnings.ToArray();
   }
+
+  void _forceTransformToFollowing(Node2D following) {
+    if (UpdatePosition) {
+      if (UseLocalCoordinates) Position = following.Position;
+      else GlobalPosition = following.GlobalPosition;
+    }
+  }
+
+  #if TOOLS
+  /// <inheritdoc />
+  public override void _Notification(int what) {
+    if (what != NotificationTransformChanged) {
+      base._Notification(what);
+      return;
+    }
+
+    if (Engine.IsEditorHint() && !RunInEditor && TryGetFollowing(out Node2D following)) {
+      _forceTransformToFollowing(following);
+    }
+
+    base._Notification(what);
+  }
+  #endif
 }
