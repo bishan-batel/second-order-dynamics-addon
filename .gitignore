@@ -4,3 +4,7 @@
 build/
 _site/
 api/
+
+# User-Specific
+*.DotSettings.user
+*.bin
