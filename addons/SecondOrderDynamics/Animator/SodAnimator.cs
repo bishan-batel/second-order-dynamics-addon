@@ -57,19 +57,33 @@ public partial class SodAnimator : Node {
       }
 
       _valueType = value;
-#if TOOLS
+      #if TOOLS
       UpdateConfigurationWarnings();
       NotifyPropertyListChanged();
-#endif
+      #endif
     }
     get => _valueType;
+  }
+
+  /// <summary>
+  /// The parameters for this simulation
+  /// </summary>
+  [ExportSubgroup("Simulation")]
+  [Export]
+  SodParams? Params {
+    set {
+      _params = value;
+      #if TOOLS
+      UpdateConfigurationWarnings();
+      #endif
+    }
+    get => _params;
   }
 
   /// <summary>
   /// The target value for this simulation. Note that setting this value may update <see cref="ValueType"/> if the type is changed,
   /// ex. setting a TargetValue to a float and then to a Vector2 would change ValueType from SupportedType.Float -> SupportedType.Vector2.
   /// </summary>
-  [ExportSubgroup("Simulation")]
   [Export]
   public Variant TargetValue {
     set {
@@ -82,10 +96,10 @@ public partial class SodAnimator : Node {
         _valueType = (SupportedType)(long)value.VariantType;
         _targetValue = value;
 
-#if TOOLS
+        #if TOOLS
         UpdateConfigurationWarnings();
         NotifyPropertyListChanged();
-#endif
+        #endif
 
         return;
       }
@@ -124,9 +138,9 @@ public partial class SodAnimator : Node {
       _runInEditor = value;
       if (_runInEditor) _usePhysicsProcess = false;
 
-#if TOOLS
+      #if TOOLS
       NotifyPropertyListChanged();
-#endif
+      #endif
     }
     get => _runInEditor;
   }
@@ -154,9 +168,9 @@ public partial class SodAnimator : Node {
   public NodePath? SetterNode {
     set {
       _setterNode = value;
-#if TOOLS
+      #if TOOLS
       NotifyPropertyListChanged();
-#endif
+      #endif
     }
     get => _setterNode;
   }
@@ -167,17 +181,6 @@ public partial class SodAnimator : Node {
   [Export(PropertyHint.EnumSuggestion)]
   public StringName? SetterProperty { set; get; }
 
-  [Export]
-  SodParams? Params {
-    set {
-      _params = value;
-#if TOOLS
-      UpdateConfigurationWarnings();
-#endif
-    }
-    get => _params;
-  }
-
   SodParams? _params;
   bool _usePhysicsProcess;
   SupportedType _valueType = SupportedType.Float;
@@ -186,7 +189,10 @@ public partial class SodAnimator : Node {
   bool _isRunning = true;
   bool _runInEditor;
 
-  SodAnimator() {
+  /// <summary>
+  /// Default constructor
+  /// </summary>
+  public SodAnimator() {
     UsePhysicsProcess = _usePhysicsProcess;
   }
 
@@ -210,21 +216,25 @@ public partial class SodAnimator : Node {
   /// <inheritdoc />
   public override void _Process(double delta) {
     if (_usePhysicsProcess) return;
-    _update(delta);
+    UpdateSimulation(delta);
   }
 
   /// <inheritdoc />
   public override void _PhysicsProcess(double delta) {
     if (!_usePhysicsProcess) return;
-    _update(delta);
+    UpdateSimulation(delta);
   }
 
-  void _update(double delta) {
-#if TOOLS
-    if (Engine.IsEditorHint() && !RunInEditor) return;
-#endif
-    if (!IsRunning) return;
-    if (_params is null) return;
+  /// <summary>
+  /// Updates the simulation, will do nothing if certain preconditions are not met, such as:
+  /// - RunInEditor is false and script is in-editor,
+  /// - Params is null
+  /// - IsRunning is false
+  /// </summary>
+  /// <param name="delta"></param>
+  protected virtual void UpdateSimulation(double delta) {
+    if (!ShouldRun()) return;
+
     _sod ??= new SodVariant(_params, TargetValue);
 
     _sod.Params = _params;
@@ -234,6 +244,19 @@ public partial class SodAnimator : Node {
     if (SetterNode is not null) {
       GetNodeOrNull(SetterNode)?.Set(SetterProperty, value);
     }
+  }
+
+  /// <summary>
+  /// Checks whether the simulation is fit to run
+  /// </summary>
+  /// <returns></returns>
+  public virtual bool ShouldRun() {
+    #if TOOLS
+    if (Engine.IsEditorHint() && !RunInEditor) return false;
+    #endif
+    if (!IsRunning) return false;
+    if (_params is null) return false;
+    return true;
   }
 
   /// <inheritdoc />
