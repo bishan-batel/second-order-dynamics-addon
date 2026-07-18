@@ -6,12 +6,17 @@ using SecondOrderDynamics.Math;
 
 namespace SecondOrderDynamics.Editor;
 
+/// <summary>
+/// Inspector plugin to inject the SOD Previews (<see cref="SodSingleEditor"/>)
+/// </summary>
 [Tool]
 public partial class SodInspectorPlugin : EditorInspectorPlugin {
+  /// <inheritdoc />
   public override bool _CanHandle(GodotObject @object) {
     return true;
   }
 
+  /// <inheritdoc />
   public override bool _ParseProperty(
     GodotObject @object,
     Variant.Type type,
