@@ -41,7 +41,9 @@
       "_appName": "SOD Animator",
       "_appTitle": "SOD Animator",
       "_enableSearch": true,
-      "pdf": false
+      "pdf": false,
+      "_appLogoPath": "./images/icon.svg",
+      "_appFaviconPath": "./images/icon.svg"
     }
   }
 }
