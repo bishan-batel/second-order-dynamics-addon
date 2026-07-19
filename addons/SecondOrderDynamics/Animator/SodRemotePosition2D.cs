@@ -18,8 +18,8 @@ public partial class SodRemotePosition2D : Node2D {
   /// <summary>
   /// The node that this will be interpolating to. Note that this is the opposite of how RemoteTransform2D works.
   /// </summary>
-  [Export(PropertyHint.NodeType, nameof(Node2D))]
-  public NodePath? Following {
+  [Export(PropertyHint.None, "Target Node to pull the target transform from")]
+  public Node2D? Following {
     set {
       _following = value;
       #if TOOLS
@@ -34,7 +34,7 @@ public partial class SodRemotePosition2D : Node2D {
   /// Whether to simulate this system when running in-editor. Note if this can run in the editor this forces
   /// <see cref="UsePhysicsProcess"/> to be disabled.
   /// </summary>
-  [Export]
+  [Export(PropertyHint.None, "Whether to simulate this system in-editor. Enabling this option will force UsePhysicsProcess to be false, as PhysicsProcess is not invoked in-editor.")]
   public bool RunInEditor {
     set {
       _runInEditor = value;
@@ -67,8 +67,7 @@ public partial class SodRemotePosition2D : Node2D {
   /// <summary>
   /// Whether to use Global units or Local units (eg. GlobalPosition vs Position)
   /// </summary>
-  [ExportGroup("Transform")]
-  [Export]
+  [ExportGroup("Transform"), Export]
   public bool UseLocalCoordinates {
     set {
       if (_useLocalCoordinates != value) {
@@ -86,8 +85,7 @@ public partial class SodRemotePosition2D : Node2D {
   /// <summary>
   /// Whether to simulate / pull position from <see cref="Following"/>
   /// </summary>
-  [ExportSubgroup("Position")]
-  [Export(PropertyHint.GroupEnable)]
+  [ExportSubgroup("Position"), Export(PropertyHint.GroupEnable)]
   public bool UpdatePosition {
     set {
       _shouldUpdatePosition = value;
@@ -102,7 +100,7 @@ public partial class SodRemotePosition2D : Node2D {
   /// <summary>
   /// Sod parameters for interpolating position.
   /// </summary>
-  [Export]
+  [Export(PropertyHint.None, "Sod parameters for interpolating position.")]
   public SodParams? PositionParams {
     set {
       _positionParams = value;
@@ -116,8 +114,7 @@ public partial class SodRemotePosition2D : Node2D {
   /// <summary>
   /// Whether to simulate / pull rotation from <see cref="Following"/>
   /// </summary>
-  [ExportSubgroup("Rotation")]
-  [Export(PropertyHint.GroupEnable)]
+  [ExportSubgroup("Rotation"), Export(PropertyHint.GroupEnable)]
   public bool UpdateRotation {
     set {
       _shouldUpdateRotation = value;
@@ -132,7 +129,7 @@ public partial class SodRemotePosition2D : Node2D {
   /// <summary>
   /// Sod parameters for interpolating rotation.
   /// </summary>
-  [Export]
+  [Export(PropertyHint.None, "Sod parameters for interpolating rotation.")]
   public SodParams? RotationParams {
     set {
       _rotationParams = value;
@@ -146,8 +143,7 @@ public partial class SodRemotePosition2D : Node2D {
   /// <summary>
   /// Whether to simulate / pull scale from <see cref="Following"/>
   /// </summary>
-  [ExportSubgroup("Scale")]
-  [Export(PropertyHint.GroupEnable)]
+  [ExportSubgroup("Scale"), Export(PropertyHint.GroupEnable)]
   public bool UpdateScale {
     set {
       _shouldUpdateScale = value;
@@ -162,7 +158,7 @@ public partial class SodRemotePosition2D : Node2D {
   /// <summary>
   /// Sod parameters for interpolating scale.
   /// </summary>
-  [Export]
+  [Export(PropertyHint.None, "Sod parameters for interpolating scale, note depending on the target interpolation this may cause very strange results!")]
   public SodParams? ScaleParams {
     set {
       _scaleParams = value;
@@ -190,7 +186,7 @@ public partial class SodRemotePosition2D : Node2D {
   bool _shouldUpdateScale;
   SodParams? _scaleParams;
   bool _useLocalCoordinates;
-  NodePath? _following;
+  Node2D? _following;
 
   void _updateProcessMode() {
     bool anyActive = UpdatePosition || UpdateRotation || UpdateScale;
@@ -204,8 +200,8 @@ public partial class SodRemotePosition2D : Node2D {
   /// <param name="following"></param>
   /// <returns>Success, do not read the out parameter if this is false.</returns>
   public bool TryGetFollowing(out Node2D following) {
-    if (GetNodeOrNull<Node2D>(Following) is { } node) {
-      following = node;
+    if (IsInstanceValid(Following) && Following is not null) {
+      following = Following;
       return true;
     }
 
