@@ -2,6 +2,7 @@
 
 [ext_resource type="Script" uid="uid://c6r6w6blmkr1w" path="res://addons/SecondOrderDynamics/Animator/SodRemoteTransform3D.cs" id="1_akvq2"]
 [ext_resource type="Script" uid="uid://cpyqqgoprjn5d" path="res://addons/SecondOrderDynamics/SodParams.cs" id="2_jjot6"]
+[ext_resource type="Script" uid="uid://dbb0mhyw8q7tw" path="res://addons/SecondOrderDynamics/Constraints/LookAtConstraint3D.cs" id="3_it7vc"]
 
 [sub_resource type="Resource" id="Resource_jjot6"]
 script = ExtResource("2_jjot6")
@@ -48,31 +49,68 @@ func random_pos():
 	return randf() * 10
 "
 
-[node name="Transform3d" type="Node3D" unique_id=1583451133]
+[sub_resource type="Resource" id="Resource_it7vc"]
+script = ExtResource("2_jjot6")
+Zeta = 0.46
+Response = 3.309
+metadata/_custom_type_script = "uid://cpyqqgoprjn5d"
 
-[node name="SodRemotePosition3D" type="Node3D" parent="." unique_id=419958830 node_paths=PackedStringArray("Following")]
+[node name="Transform3d" type="Node3D" unique_id=1583451133]
+metadata/_edit_lock_ = true
+
+[node name="RemotePosition3D Box Looking at you" type="Node3D" parent="." unique_id=2125736222]
+metadata/_edit_lock_ = true
+
+[node name="SodRemoteTransform3D" type="Node3D" parent="RemotePosition3D Box Looking at you" unique_id=419958830 node_paths=PackedStringArray("Following")]
 editor_description = "SOD Animator for a 3D Node. This node will follow / interpolate to another Node3D's transform (with options to enable following position, rotation, and scale individually) using a SOD system 
 which can be configured with the 'Params' property."
-transform = Transform3D(0.72694856, 0.079211, 0.68187803, 0.0035788377, 0.9927114, -0.11913695, -0.68644446, 0.08906047, 0.7214915, 4.3874617, 0, 7.0008254)
-position = Vector3(4.3874617, 0, 7.0008254)
-rotation = Vector3(0.119438514, 0.75717825, 0.0036051145)
+transform = Transform3D(0.9763762, -0.0040023536, -0.21528883, 0.0013991959, 0.99976164, -0.012240782, 0.2153196, 0.011652172, 0.9763162, 6.2151203, 0, 4.625893)
+position = Vector3(6.2151203, 0, 4.625893)
+rotation = Vector3(0.012242972, -0.21703802, 0.0013995287)
 script = ExtResource("1_akvq2")
-Following = NodePath("../Marker3D")
+Following = NodePath("../Target")
 PositionParams = SubResource("Resource_jjot6")
 RotationParams = SubResource("Resource_akvq2")
-RunInEditor = true
 metadata/_custom_type_script = "uid://c6r6w6blmkr1w"
 metadata/_edit_lock_ = true
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="SodRemotePosition3D" unique_id=398217702]
+[node name="MeshInstance3D" type="MeshInstance3D" parent="RemotePosition3D Box Looking at you/SodRemoteTransform3D" unique_id=398217702]
 mesh = SubResource("BoxMesh_fayhq")
 metadata/_edit_lock_ = true
 
-[node name="MeshInstance3D2" type="MeshInstance3D" parent="SodRemotePosition3D" unique_id=984215369]
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="RemotePosition3D Box Looking at you/SodRemoteTransform3D" unique_id=984215369]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.29)
 mesh = SubResource("BoxMesh_jjot6")
 metadata/_edit_lock_ = true
 
-[node name="Marker3D" type="Marker3D" parent="." unique_id=419163737]
-transform = Transform3D(0.6301121, 0.10023544, 0.7700034, 0, 0.99162954, -0.12908588, -0.77650005, 0.08133878, 0.62484026, 4.544539, 0, 9.138296)
+[node name="Target" type="Marker3D" parent="RemotePosition3D Box Looking at you" unique_id=419163737]
+transform = Transform3D(0.9455554, 0.007108238, 0.32533857, 0, 0.99974597, -0.021843255, -0.32541597, 0.020654282, 0.9453305, 5.3868623, 0, 5.479883)
 script = SubResource("GDScript_jjot6")
+
+[node name="LookAtSod" type="Node3D" parent="." unique_id=2050965604 node_paths=PackedStringArray("Following")]
+editor_description = "SOD Animator for a 3D Node. This node will follow / interpolate to another Node3D's transform (with options to enable following position, rotation, and scale individually) using a SOD system 
+which can be configured with the 'Params' property."
+transform = Transform3D(-0.94783145, 0, -0.31835663, 0, 0.99999994, 0, 0.31835663, 0, -0.94783145, 5.60112, 0, 0)
+rotation = Vector3(0, -2.8175528, 0)
+script = ExtResource("1_akvq2")
+Following = NodePath("../LookAtConstraint3D")
+UpdatePosition = false
+RotationParams = SubResource("Resource_it7vc")
+metadata/_custom_type_script = "uid://c6r6w6blmkr1w"
+
+[node name="MeshInstance3D3" type="MeshInstance3D" parent="LookAtSod" unique_id=450864534]
+transform = Transform3D(0.9998391, 0, 7.450581e-09, 0, 0.99983203, 0, 0, 0, 0.9998503, 0, 0, 0)
+mesh = SubResource("BoxMesh_fayhq")
+metadata/_edit_lock_ = true
+
+[node name="MeshInstance3D4" type="MeshInstance3D" parent="LookAtSod" unique_id=433918187]
+transform = Transform3D(0.9998391, 0, 7.450581e-09, 0, 0.99983203, 0, 0, 0, 0.9998503, 0, 0, -0.50000006)
+mesh = SubResource("BoxMesh_jjot6")
+metadata/_edit_lock_ = true
+
+[node name="LookAtConstraint3D" type="Node3D" parent="." unique_id=506267863 node_paths=PackedStringArray("Target")]
+transform = Transform3D(-0.9913059, 0, -0.13157716, 0, 0.99999994, 0, 0.13157716, 0, -0.9913059, 5.60112, 0, 0)
+script = ExtResource("3_it7vc")
+LookAtPosition = Vector3(-67.02, 36.94, 3.83)
+Target = NodePath("../RemotePosition3D Box Looking at you/SodRemoteTransform3D")
+metadata/_custom_type_script = "uid://dbb0mhyw8q7tw"

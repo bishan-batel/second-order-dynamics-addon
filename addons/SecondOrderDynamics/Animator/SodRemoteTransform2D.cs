@@ -210,7 +210,7 @@ public partial class SodRemoteTransform2D : Node2D {
   bool _useLocalCoordinates;
   Node2D? _following;
 
-  bool _runInEditor;
+  bool _runInEditor = true;
   bool _drawGizmos = true;
 
   #endregion
@@ -221,6 +221,7 @@ public partial class SodRemoteTransform2D : Node2D {
   public SodRemoteTransform2D() {
     #if TOOLS
     SetNotifyTransform(Engine.IsEditorHint());
+    RunInEditor = _runInEditor;
     #endif
 
     EditorDescription =

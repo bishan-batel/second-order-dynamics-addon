@@ -201,7 +201,7 @@ public partial class SodRemoteTransform3D : Node3D {
   bool _useLocalCoordinates;
   Node3D? _following;
 
-  bool _runInEditor;
+  bool _runInEditor = true;
 
   #endregion
 
@@ -211,6 +211,7 @@ public partial class SodRemoteTransform3D : Node3D {
   public SodRemoteTransform3D() {
     #if TOOLS
     SetNotifyTransform(Engine.IsEditorHint());
+    RunInEditor = _runInEditor;
     #endif
     EditorDescription =
       """
