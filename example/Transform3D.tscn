@@ -11,22 +11,49 @@ metadata/_custom_type_script = "uid://cpyqqgoprjn5d"
 
 [sub_resource type="Resource" id="Resource_jjot6"]
 script = ExtResource("2_jjot6")
-Frequency = 2.0
 Zeta = 0.5
-Response = 3.049
+Response = 5.0
 metadata/_custom_type_script = "uid://cpyqqgoprjn5d"
 
 [sub_resource type="BoxMesh" id="BoxMesh_fayhq"]
 
 [sub_resource type="BoxMesh" id="BoxMesh_jjot6"]
-size = Vector3(1, 0.2, 0.2)
+size = Vector3(0.2, 0.2, 1)
+
+[sub_resource type="GDScript" id="GDScript_jjot6"]
+script/source = "@tool
+extends Marker3D
+
+
+# Called when the node enters the scene tree for the first time.
+
+# Called every frame. 'delta' is the elapsed time since the previous frame.
+func _process(delta: float) -> void:
+	var pos: Vector3
+	
+	if Engine.is_editor_hint():
+		pos = EditorInterface.get_editor_viewport_3d().get_camera_3d().global_position;
+	else:
+		pos = get_viewport().get_camera_3d().global_position
+	look_at(pos)
+	
+	if randf() < 0.01:
+		_on_timer_timeout()
+
+
+func _on_timer_timeout() -> void:
+	global_position = Vector3(random_pos(), 0, random_pos())
+
+func random_pos():
+	return randf() * 10
+"
 
 [node name="Transform3d" type="Node3D" unique_id=1583451133]
 
 [node name="SodRemotePosition3D" type="Node3D" parent="." unique_id=419958830 node_paths=PackedStringArray("Following")]
-transform = Transform3D(0.7185418, -0.43841, 0.539806, -0.608049, -0.7727473, 0.18175532, 0.3374783, -0.45885098, -0.82185143, -0.77990246, 3.5676188, 5.893243)
-position = Vector3(-0.77990246, 3.5676188, 5.893243)
-rotation = Vector3(-0.18278372, 2.56044, -2.474919)
+transform = Transform3D(0.7869918, -0.55143464, -0.27615884, 0.0042697354, 0.45257398, -0.891557, 0.6167057, 0.70056444, 0.358585, 9.909588, 7e-45, 2.2715957)
+position = Vector3(9.909588, 7e-45, 2.2715957)
+rotation = Vector3(1.1010463, -0.6562633, 0.009434028)
 script = ExtResource("1_akvq2")
 Following = NodePath("../Marker3D")
 PositionParams = SubResource("Resource_akvq2")
@@ -40,9 +67,10 @@ mesh = SubResource("BoxMesh_fayhq")
 metadata/_edit_lock_ = true
 
 [node name="MeshInstance3D2" type="MeshInstance3D" parent="SodRemotePosition3D" unique_id=984215369]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.58, 0, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.29)
 mesh = SubResource("BoxMesh_jjot6")
 metadata/_edit_lock_ = true
 
 [node name="Marker3D" type="Marker3D" parent="." unique_id=419163737]
-transform = Transform3D(0.71912813, -0.4391923, 0.5384839, -0.6080741, -0.7727917, 0.1817676, 0.33630496, -0.45815226, -0.82279766, -0.77990246, 3.5676188, 5.893243)
+transform = Transform3D(0.7780754, -0.55687374, -0.2906692, 0, 0.46272334, -0.886502, 0.6281698, 0.68976545, 0.36003414, 9.909336, 0, 2.271572)
+script = SubResource("GDScript_jjot6")
