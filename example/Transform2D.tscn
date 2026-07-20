@@ -23,13 +23,13 @@ metadata/_custom_type_script = "uid://cpyqqgoprjn5d"
 [node name="Transform2d" type="Node2D" unique_id=1626683008]
 
 [node name="Anchor" type="Marker2D" parent="." unique_id=1888575354]
-position = Vector2(490.00006, 241)
+position = Vector2(423, 345)
 rotation = -0.026052322
 gizmo_extents = 72.0
 
 [node name="SodRemoteTransform2D" type="Node2D" parent="." unique_id=2072307890 node_paths=PackedStringArray("Following")]
-position = Vector2(490.00006, 241)
-rotation = -0.026052322
+position = Vector2(423.00006, 345.00003)
+rotation = -0.0303025
 script = ExtResource("1_d0kg7")
 Following = NodePath("../Anchor")
 PositionParams = SubResource("Resource_6x8du")

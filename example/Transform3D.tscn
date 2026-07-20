@@ -51,9 +51,9 @@ func random_pos():
 [node name="Transform3d" type="Node3D" unique_id=1583451133]
 
 [node name="SodRemotePosition3D" type="Node3D" parent="." unique_id=419958830 node_paths=PackedStringArray("Following")]
-transform = Transform3D(0.7869918, -0.55143464, -0.27615884, 0.0042697354, 0.45257398, -0.891557, 0.6167057, 0.70056444, 0.358585, 9.909588, 7e-45, 2.2715957)
-position = Vector3(9.909588, 7e-45, 2.2715957)
-rotation = Vector3(1.1010463, -0.6562633, 0.009434028)
+transform = Transform3D(0.08841387, 0.80627716, 0.5846363, 2.967837e-05, 0.5869279, -0.8094572, -0.9959234, 0.07159537, 0.05187742, 8.031302, 3.1e-44, 2.84534)
+position = Vector3(8.031302, 3.1e-44, 2.84534)
+rotation = Vector3(0.94342583, 1.4822936, 5.0565934e-05)
 script = ExtResource("1_akvq2")
 Following = NodePath("../Marker3D")
 PositionParams = SubResource("Resource_akvq2")
@@ -72,5 +72,5 @@ mesh = SubResource("BoxMesh_jjot6")
 metadata/_edit_lock_ = true
 
 [node name="Marker3D" type="Marker3D" parent="." unique_id=419163737]
-transform = Transform3D(0.7780754, -0.55687374, -0.2906692, 0, 0.46272334, -0.886502, 0.6281698, 0.68976545, 0.36003414, 9.909336, 0, 2.271572)
+transform = Transform3D(0.08823088, 0.80646765, 0.58465534, 0, 0.58694386, -0.80962586, -0.9960992, 0.071434006, 0.051786665, 8.031302, 0, 2.84534)
 script = SubResource("GDScript_jjot6")

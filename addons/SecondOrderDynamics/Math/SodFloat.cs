@@ -40,7 +40,7 @@ public class SodFloat : SecondOrderDynamics<float> {
     }
 
     float k2Stable = Params.GetK2Stable(delta);
-    
+
     Y += delta * Yd;
     Yd += delta * (x + Params.K3 * (float)xd - Y - Params.K1 * Yd) / k2Stable;
     return Y;
@@ -57,7 +57,12 @@ public class SodFloat : SecondOrderDynamics<float> {
     float k2Stable = Mathf.Max(Params.K2, Mathf.Max(delta * delta / 2f + delta * Params.K1 / 2f, delta * Params.K1));
     Y += delta * Yd;
     // Yd += delta * (x + Params.K3 * (float)xd - Y - Params.K1 * Yd) / k2Stable;
-    Yd += delta * (x + Mathf.AngleDifference(Params.K1 * Yd, Mathf.AngleDifference(Y, Params.K3 * (float)xd))) / k2Stable;
+
+    float error = Mathf.AngleDifference(Y, x);
+
+    float acceleration = (error + Params.K3 * (float)xd - Params.K1 * Yd) / k2Stable;
+
+    Yd += delta * acceleration;
     return Y;
   }
 
