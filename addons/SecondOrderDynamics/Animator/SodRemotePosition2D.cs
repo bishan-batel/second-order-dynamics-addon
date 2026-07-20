@@ -178,7 +178,7 @@ public partial class SodRemotePosition2D : Node2D {
   /// <summary>
   /// Whether to draw helper gizmos when in-editor
   /// </summary>
-  [Export]
+  // [Export]
   public bool DrawGizmos {
     set {
       _drawGizmos = value;
