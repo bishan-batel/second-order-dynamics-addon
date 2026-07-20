@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://ypkyfymamujo"
-path="res://.godot/imported/SodRemotePosition2D.svg-c55478defbd3a2426bfe45cd09a10ccf.ctex"
+uid="uid://c7t06dixvetwk"
+path="res://.godot/imported/SodRemoteTransform2D.svg-6416ee3d7f9303398aa71d2f0d5d524f.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://addons/SecondOrderDynamics/Icons/SodRemotePosition2D.svg"
-dest_files=["res://.godot/imported/SodRemotePosition2D.svg-c55478defbd3a2426bfe45cd09a10ccf.ctex"]
+source_file="res://addons/SecondOrderDynamics/Icons/SodRemoteTransform2D.svg"
+dest_files=["res://.godot/imported/SodRemoteTransform2D.svg-6416ee3d7f9303398aa71d2f0d5d524f.ctex"]
 
 [params]
 

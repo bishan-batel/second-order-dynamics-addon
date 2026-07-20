@@ -1,40 +1,35 @@
 [gd_scene format=3 uid="uid://bq4byiv16eime"]
 
-[ext_resource type="Script" uid="uid://bjixespgf4ybd" path="res://addons/SecondOrderDynamics/Animator/SodRemotePosition2D.cs" id="1_d0kg7"]
+[ext_resource type="Script" uid="uid://bjixespgf4ybd" path="res://addons/SecondOrderDynamics/Animator/SodRemoteTransform2D.cs" id="1_153rd"]
 [ext_resource type="Texture2D" uid="uid://bh6tsmbupjkwd" path="res://addons/SecondOrderDynamics/Icons/SodParams.svg" id="2_6x8du"]
 [ext_resource type="Script" uid="uid://cpyqqgoprjn5d" path="res://addons/SecondOrderDynamics/SodParams.cs" id="2_153rd"]
 
-[sub_resource type="Resource" id="Resource_6x8du"]
+[sub_resource type="Resource" id="Resource_153rd"]
 script = ExtResource("2_153rd")
-Frequency = 0.981
-Zeta = 0.459
-metadata/_custom_type_script = "uid://cpyqqgoprjn5d"
-
-[sub_resource type="Resource" id="Resource_chq62"]
-script = ExtResource("2_153rd")
-Response = 0.0
+Frequency = 2.0
+Zeta = 0.5
+Response = 1.0
 metadata/_custom_type_script = "uid://cpyqqgoprjn5d"
 
 [sub_resource type="Resource" id="Resource_pbopk"]
 script = ExtResource("2_153rd")
-Response = 1.0
+Zeta = 0.5
+Response = 4.42
 metadata/_custom_type_script = "uid://cpyqqgoprjn5d"
 
 [node name="Transform2d" type="Node2D" unique_id=1626683008]
 
 [node name="Anchor" type="Marker2D" parent="." unique_id=1888575354]
-position = Vector2(423, 345)
-rotation = -0.026052322
-gizmo_extents = 72.0
+position = Vector2(594, 252)
+rotation = -0.75999343
 
 [node name="SodRemoteTransform2D" type="Node2D" parent="." unique_id=2072307890 node_paths=PackedStringArray("Following")]
-position = Vector2(423.00006, 345.00003)
-rotation = -0.0303025
-script = ExtResource("1_d0kg7")
+position = Vector2(594.0001, 251.99997)
+rotation = -0.81068957
+script = ExtResource("1_153rd")
 Following = NodePath("../Anchor")
-PositionParams = SubResource("Resource_6x8du")
-RotationParams = SubResource("Resource_chq62")
-ScaleParams = SubResource("Resource_pbopk")
+PositionParams = SubResource("Resource_153rd")
+RotationParams = SubResource("Resource_pbopk")
 RunInEditor = true
 metadata/_custom_type_script = "uid://bjixespgf4ybd"
 

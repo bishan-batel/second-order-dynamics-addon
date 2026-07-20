@@ -1,6 +1,7 @@
 #nullable enable
 
 using System.Diagnostics.CodeAnalysis;
+using Godot;
 
 namespace SecondOrderDynamics.Math;
 

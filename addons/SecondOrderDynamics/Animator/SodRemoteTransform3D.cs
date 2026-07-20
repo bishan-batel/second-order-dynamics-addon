@@ -11,8 +11,8 @@ namespace SecondOrderDynamics.Animator;
 /// <summary>
 /// An animator node that applies a SOD Simulation for GlobalPosition, allowing you to make one node procedurally animated to another node 
 /// </summary>
-[GlobalClass, Tool, Icon("res://addons/SecondOrderDynamics/Icons/SodRemotePosition3D.svg")]
-public partial class SodRemotePosition3D : Node3D {
+[GlobalClass, Tool, Icon("res://addons/SecondOrderDynamics/Icons/SodRemoteTransform3D.svg")]
+public partial class SodRemoteTransform3D : Node3D {
   #region Exports
 
   /// <summary>
@@ -208,7 +208,7 @@ public partial class SodRemotePosition3D : Node3D {
   /// <summary>
   /// Default constructor
   /// </summary>
-  public SodRemotePosition3D() {
+  public SodRemoteTransform3D() {
     SetNotifyTransform(Engine.IsEditorHint());
   }
 

@@ -1,26 +1,7 @@
 [gd_scene format=3 uid="uid://57l330q7tufd"]
 
 [ext_resource type="Texture2D" uid="uid://cad82o40u0sah" path="res://icon.svg" id="1_jp81o"]
-[ext_resource type="Script" uid="uid://bjixespgf4ybd" path="res://addons/SecondOrderDynamics/Animator/SodRemotePosition2D.cs" id="1_o5b4g"]
-[ext_resource type="Script" uid="uid://cpyqqgoprjn5d" path="res://addons/SecondOrderDynamics/SodParams.cs" id="2_vw37u"]
-
-[sub_resource type="Resource" id="Resource_o5b4g"]
-script = ExtResource("2_vw37u")
-Frequency = 1.96
-Zeta = 0.38
-Response = 1.0
-metadata/_custom_type_script = "uid://cpyqqgoprjn5d"
-
-[sub_resource type="Resource" id="Resource_vw37u"]
-script = ExtResource("2_vw37u")
-Frequency = 1.673
-Zeta = 0.561
-metadata/_custom_type_script = "uid://cpyqqgoprjn5d"
-
-[sub_resource type="Resource" id="Resource_o47kv"]
-script = ExtResource("2_vw37u")
-Response = 1.0
-metadata/_custom_type_script = "uid://cpyqqgoprjn5d"
+[ext_resource type="Script" uid="uid://bjixespgf4ybd" path="res://addons/SecondOrderDynamics/Animator/SodRemoteTransform2D.cs" id="2_o5b4g"]
 
 [sub_resource type="GDScript" id="GDScript_fayhq"]
 script/source = "@tool
@@ -51,11 +32,7 @@ position = Vector2(0, -51)
 gizmo_extents = 5.0
 
 [node name="SodRemotePosition2D" type="Node2D" parent="Player/Head" unique_id=935698006]
-script = ExtResource("1_o5b4g")
-Following = NodePath("..")
-RunInEditor = true
-PositionParams = SubResource("Resource_o5b4g")
-RotationParams = SubResource("Resource_vw37u")
+script = ExtResource("2_o5b4g")
 metadata/_custom_type_script = "uid://bjixespgf4ybd"
 
 [node name="Icon" type="Sprite2D" parent="Player/Head/SodRemotePosition2D" unique_id=1918106742]
@@ -68,11 +45,6 @@ gizmo_extents = 5.0
 
 [node name="SodRemotePosition2D" type="Node2D" parent="Player/Leg Left" unique_id=149097078]
 position = Vector2(0.00015258789, 0.00015258789)
-script = ExtResource("1_o5b4g")
-Following = NodePath("..")
-RunInEditor = true
-PositionParams = SubResource("Resource_o47kv")
-UpdateRotation = false
 metadata/_custom_type_script = "uid://bjixespgf4ybd"
 
 [node name="Leg" type="Line2D" parent="Player/Leg Left/SodRemotePosition2D" unique_id=2066091257 node_paths=PackedStringArray("pin")]
