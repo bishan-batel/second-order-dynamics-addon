@@ -1,0 +1,259 @@
+[gd_scene format=3 uid="uid://p3675exf607s"]
+
+[ext_resource type="PackedScene" uid="uid://c7m05q3wljmyi" path="res://example/spider3d/spider.blend" id="1_nrlqs"]
+[ext_resource type="Script" uid="uid://c6r6w6blmkr1w" path="res://addons/SecondOrderDynamics/Animator/SodRemoteTransform3D.cs" id="2_chri7"]
+[ext_resource type="Script" uid="uid://b18ps06xj1cck" path="res://example/spider3d/spider.gd" id="2_t744s"]
+[ext_resource type="JointLimitationCone3D" uid="uid://chso6n6oj1woi" path="res://example/spider3d/leg_root_joint_limitation_cone.tres" id="4_o74lo"]
+[ext_resource type="Script" uid="uid://crj3n7vbc7ngd" path="res://example/spider3d/spider_leg.gd" id="5_ajiqd"]
+[ext_resource type="JointLimitationCone3D" uid="uid://cu5npe4dn7uxh" path="res://example/spider3d/leg_hinge_joint_limitation.tres" id="5_c4ml0"]
+[ext_resource type="Resource" uid="uid://bhqk8om2cevab" path="res://example/spider3d/leg_sod_params.tres" id="6_t744s"]
+[ext_resource type="Resource" uid="uid://c6pfjcokk3xav" path="res://example/spider3d/spider_body_position_sod.tres" id="8_eo7wt"]
+[ext_resource type="Resource" uid="uid://bijl85au6c2fj" path="res://example/spider3d/spider_body_rotation_sod.tres" id="9_562vm"]
+
+[sub_resource type="SphereMesh" id="SphereMesh_fayhq"]
+radius = 0.1
+height = 0.2
+radial_segments = 8
+rings = 4
+
+[node name="Spider" unique_id=477848417 node_paths=PackedStringArray("legs") instance=ExtResource("1_nrlqs")]
+script = ExtResource("2_t744s")
+ankle_height = -1.0
+legs = [NodePath("Armature/Skeleton3D/Front Left"), NodePath("Armature/Skeleton3D/Front Right"), NodePath("Armature/Skeleton3D/Hind Left"), NodePath("Armature/Skeleton3D/Hind Right")]
+
+[node name="Skeleton3D" parent="Armature" parent_id_path=PackedInt32Array(772797170) index="0" unique_id=1846976540]
+transform = Transform3D(0.9998854, 0, 0, 0, 1, 0, 0, 0, 0.9998854, -6.301736e-17, 6.950014e-23, -5.1029467e-17)
+
+[node name="Front Left" type="FABRIK3D" parent="Armature/Skeleton3D" index="1" unique_id=594082516 node_paths=PackedStringArray("adjacent_legs")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, -1)
+setting_count = 1
+settings/0/target_node = NodePath("SodRemoteTransform3D")
+settings/0/root_bone_name = "front1.l"
+settings/0/root_bone = 0
+settings/0/end_bone_name = "front3.l.001"
+settings/0/end_bone = 3
+settings/0/extend_end_bone = false
+settings/0/joint_count = 4
+settings/0/joints/0/rotation_axis = 3
+settings/0/joints/0/limitation = ExtResource("4_o74lo")
+settings/0/joints/0/limitation/right_axis = 0
+settings/0/joints/0/limitation/rotation_offset = Quaternion(0, 0, 0, 1)
+settings/0/joints/1/rotation_axis = 3
+settings/0/joints/1/limitation = ExtResource("5_c4ml0")
+settings/0/joints/1/limitation/right_axis = 0
+settings/0/joints/1/limitation/rotation_offset = Quaternion(0, 0, 0, 1)
+settings/0/joints/2/rotation_axis = 3
+settings/0/joints/2/limitation = ExtResource("5_c4ml0")
+settings/0/joints/2/limitation/right_axis = 0
+settings/0/joints/2/limitation/rotation_offset = Quaternion(0, 0, 0, 1)
+settings/0/joints/3/rotation_axis = 3
+settings/0/joints/3/limitation = null
+script = ExtResource("5_ajiqd")
+adjacent_legs = [NodePath("../Front Right"), NodePath("../Hind Left")]
+
+[node name="Target" type="Marker3D" parent="Armature/Skeleton3D/Front Left" index="0" unique_id=15943447]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.1450515, -1.0000002, -0.82483006)
+top_level = true
+
+[node name="SodRemoteTransform3D" type="Node3D" parent="Armature/Skeleton3D/Front Left" index="1" unique_id=1304757074 node_paths=PackedStringArray("Following")]
+editor_description = "SOD Animator for a 3D Node. This node will follow / interpolate to another Node3D's transform (with options to enable following position, rotation, and scale individually) using a SOD system 
+which can be configured with the 'Params' property."
+transform = Transform3D(0.99976444, 0, -6.280959e-07, 0, 0.99974924, 0, 6.280959e-07, 0, 0.99976444, 0.14518255, -1.0000002, 0.17507535)
+position = Vector3(0.14518255, -1.0000002, 0.17507535)
+script = ExtResource("2_chri7")
+Following = NodePath("../Target")
+PositionParams = ExtResource("6_t744s")
+UpdateRotation = false
+metadata/_custom_type_script = "uid://c6r6w6blmkr1w"
+
+[node name="Front Right" type="FABRIK3D" parent="Armature/Skeleton3D" index="2" unique_id=2123316609 node_paths=PackedStringArray("adjacent_legs")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 1)
+setting_count = 1
+settings/0/target_node = NodePath("SodRemoteTransform3D")
+settings/0/root_bone_name = "front1.r"
+settings/0/root_bone = 8
+settings/0/end_bone_name = "front3.r.001"
+settings/0/end_bone = 11
+settings/0/extend_end_bone = false
+settings/0/joint_count = 4
+settings/0/joints/0/rotation_axis = 3
+settings/0/joints/0/limitation = ExtResource("4_o74lo")
+settings/0/joints/0/limitation/right_axis = 0
+settings/0/joints/0/limitation/rotation_offset = Quaternion(0, 0, 0, 1)
+settings/0/joints/1/rotation_axis = 3
+settings/0/joints/1/limitation = ExtResource("5_c4ml0")
+settings/0/joints/1/limitation/right_axis = 0
+settings/0/joints/1/limitation/rotation_offset = Quaternion(0, 0, 0, 1)
+settings/0/joints/2/rotation_axis = 3
+settings/0/joints/2/limitation = ExtResource("5_c4ml0")
+settings/0/joints/2/limitation/right_axis = 0
+settings/0/joints/2/limitation/rotation_offset = Quaternion(0, 0, 0, 1)
+settings/0/joints/3/rotation_axis = 3
+settings/0/joints/3/limitation = null
+script = ExtResource("5_ajiqd")
+adjacent_legs = [NodePath("../Front Left"), NodePath("../Hind Right")]
+
+[node name="Target" type="Marker3D" parent="Armature/Skeleton3D/Front Right" index="0" unique_id=1910359841]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.4033597, -1.0000002, 1.1749407)
+top_level = true
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="Armature/Skeleton3D/Front Right/Target" index="0" unique_id=951253348]
+visible = false
+mesh = SubResource("SphereMesh_fayhq")
+
+[node name="SodRemoteTransform3D" type="Node3D" parent="Armature/Skeleton3D/Front Right" index="1" unique_id=1229202673 node_paths=PackedStringArray("Following")]
+editor_description = "SOD Animator for a 3D Node. This node will follow / interpolate to another Node3D's transform (with options to enable following position, rotation, and scale individually) using a SOD system 
+which can be configured with the 'Params' property."
+transform = Transform3D(0.99976444, 0, -6.280959e-07, 0, 0.999751, 0, 6.280959e-07, 0, 0.99976444, 0.4035204, -1, 0.17507547)
+position = Vector3(0.4035204, -1, 0.17507547)
+script = ExtResource("2_chri7")
+Following = NodePath("../Target")
+PositionParams = ExtResource("6_t744s")
+UpdateRotation = false
+metadata/_custom_type_script = "uid://c6r6w6blmkr1w"
+
+[node name="Hind Left" type="FABRIK3D" parent="Armature/Skeleton3D" index="3" unique_id=1311807251 node_paths=PackedStringArray("adjacent_legs")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1, 0, -1)
+setting_count = 1
+settings/0/target_node = NodePath("SodRemoteTransform3D")
+settings/0/root_bone_name = "hind1.l"
+settings/0/root_bone = 4
+settings/0/end_bone_name = "hind3.l.001"
+settings/0/end_bone = 7
+settings/0/extend_end_bone = false
+settings/0/joint_count = 4
+settings/0/joints/0/rotation_axis = 3
+settings/0/joints/0/limitation = ExtResource("4_o74lo")
+settings/0/joints/0/limitation/right_axis = 0
+settings/0/joints/0/limitation/rotation_offset = Quaternion(0, 0, 0, 1)
+settings/0/joints/1/rotation_axis = 3
+settings/0/joints/1/limitation = ExtResource("5_c4ml0")
+settings/0/joints/1/limitation/right_axis = 0
+settings/0/joints/1/limitation/rotation_offset = Quaternion(0, 0, 0, 1)
+settings/0/joints/2/rotation_axis = 3
+settings/0/joints/2/limitation = ExtResource("5_c4ml0")
+settings/0/joints/2/limitation/right_axis = 0
+settings/0/joints/2/limitation/rotation_offset = Quaternion(0, 0, 0, 1)
+settings/0/joints/3/rotation_axis = 3
+settings/0/joints/3/limitation = null
+script = ExtResource("5_ajiqd")
+adjacent_legs = [NodePath("../Hind Right"), NodePath("../Front Left")]
+
+[node name="Target" type="Marker3D" parent="Armature/Skeleton3D/Hind Left" index="0" unique_id=1669317893]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.5964111, -1.0000002, -0.82483006)
+top_level = true
+
+[node name="MeshInstance3D3" type="MeshInstance3D" parent="Armature/Skeleton3D/Hind Left/Target" index="0" unique_id=259044298]
+visible = false
+mesh = SubResource("SphereMesh_fayhq")
+
+[node name="SodRemoteTransform3D" type="Node3D" parent="Armature/Skeleton3D/Hind Left" index="1" unique_id=928290566 node_paths=PackedStringArray("Following")]
+editor_description = "SOD Animator for a 3D Node. This node will follow / interpolate to another Node3D's transform (with options to enable following position, rotation, and scale individually) using a SOD system 
+which can be configured with the 'Params' property."
+transform = Transform3D(0.99976444, 0, -6.280959e-07, 0, 0.999751, 0, 6.280959e-07, 0, 0.99976444, 0.40352046, -1, 0.17507535)
+position = Vector3(0.40352046, -1, 0.17507535)
+script = ExtResource("2_chri7")
+Following = NodePath("../Target")
+PositionParams = ExtResource("6_t744s")
+UpdateRotation = false
+metadata/_custom_type_script = "uid://c6r6w6blmkr1w"
+
+[node name="Hind Right" type="FABRIK3D" parent="Armature/Skeleton3D" index="4" unique_id=103467810 node_paths=PackedStringArray("adjacent_legs")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1, 0, 1)
+setting_count = 1
+settings/0/target_node = NodePath("SodRemoteTransform3D")
+settings/0/root_bone_name = "hind1.r"
+settings/0/root_bone = 12
+settings/0/end_bone_name = "hind3.r.001"
+settings/0/end_bone = 15
+settings/0/extend_end_bone = false
+settings/0/joint_count = 4
+settings/0/joints/0/rotation_axis = 3
+settings/0/joints/0/limitation = ExtResource("4_o74lo")
+settings/0/joints/0/limitation/right_axis = 0
+settings/0/joints/0/limitation/rotation_offset = Quaternion(0, 0, 0, 1)
+settings/0/joints/1/rotation_axis = 3
+settings/0/joints/1/limitation = ExtResource("5_c4ml0")
+settings/0/joints/1/limitation/right_axis = 0
+settings/0/joints/1/limitation/rotation_offset = Quaternion(0, 0, 0, 1)
+settings/0/joints/2/rotation_axis = 3
+settings/0/joints/2/limitation = ExtResource("5_c4ml0")
+settings/0/joints/2/limitation/right_axis = 0
+settings/0/joints/2/limitation/rotation_offset = Quaternion(0, 0, 0, 1)
+settings/0/joints/3/rotation_axis = 3
+settings/0/joints/3/limitation = null
+script = ExtResource("5_ajiqd")
+adjacent_legs = [NodePath("../Front Right"), NodePath("../Hind Left")]
+
+[node name="Target" type="Marker3D" parent="Armature/Skeleton3D/Hind Right" index="0" unique_id=653563405]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.8547193, -1.0000002, 1.1749407)
+top_level = true
+
+[node name="MeshInstance3D4" type="MeshInstance3D" parent="Armature/Skeleton3D/Hind Right/Target" index="0" unique_id=1477353583]
+visible = false
+mesh = SubResource("SphereMesh_fayhq")
+
+[node name="SodRemoteTransform3D" type="Node3D" parent="Armature/Skeleton3D/Hind Right" index="1" unique_id=2033139897 node_paths=PackedStringArray("Following")]
+editor_description = "SOD Animator for a 3D Node. This node will follow / interpolate to another Node3D's transform (with options to enable following position, rotation, and scale individually) using a SOD system 
+which can be configured with the 'Params' property."
+transform = Transform3D(0.99976444, 0, -6.280959e-07, 0, 0.999751, 0, 6.280959e-07, 0, 0.99976444, 0.14518267, -1.0000002, 0.17507535)
+position = Vector3(0.14518267, -1.0000002, 0.17507535)
+script = ExtResource("2_chri7")
+Following = NodePath("../Target")
+PositionParams = ExtResource("6_t744s")
+UpdateRotation = false
+metadata/_custom_type_script = "uid://c6r6w6blmkr1w"
+
+[node name="BoneAttachment3D" type="BoneAttachment3D" parent="Armature/Skeleton3D" index="5" unique_id=1631357689]
+transform = Transform3D(0.9099552, 0.2909385, 0.29552627, -0.2668473, -0.13471793, 0.9542764, 0.3174485, -0.9472095, -0.044951122, 1.1098655, -1.0763872, -0.96842444)
+bone_name = "front3.l.001"
+bone_idx = 3
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Armature/Skeleton3D/BoneAttachment3D" index="0" unique_id=1979413029]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 0.9999999, 0, 0, 0)
+mesh = SubResource("SphereMesh_fayhq")
+
+[node name="BoneAttachment3D2" type="BoneAttachment3D" parent="Armature/Skeleton3D" index="6" unique_id=514055799]
+transform = Transform3D(0.074632585, -0.060800694, -0.9953557, 0.963225, -0.25396782, 0.087736875, -0.25812274, -0.96529967, 0.039610572, -0.59715104, -0.9992331, -0.82508373)
+bone_name = "hind3.l.001"
+bone_idx = 7
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Armature/Skeleton3D/BoneAttachment3D2" index="0" unique_id=800165609]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 0.9999999, 0, 0, 0)
+mesh = SubResource("SphereMesh_fayhq")
+
+[node name="BoneAttachment3D3" type="BoneAttachment3D" parent="Armature/Skeleton3D" index="7" unique_id=67670108]
+transform = Transform3D(0.8294146, 0.54699993, -0.11341399, -0.18187776, 0.07245514, -0.98064816, -0.5281969, 0.8339911, 0.15958244, 1.3999968, -0.9942789, 1.1768892)
+bone_name = "front3.r.001"
+bone_idx = 11
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Armature/Skeleton3D/BoneAttachment3D3" index="0" unique_id=1848897941]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 0.9999999, 0, 0, 0)
+mesh = SubResource("SphereMesh_fayhq")
+
+[node name="BoneAttachment3D4" type="BoneAttachment3D" parent="Armature/Skeleton3D" index="8" unique_id=749675410]
+transform = Transform3D(0.2346162, -0.7342965, 0.636996, 0.7306664, -0.29899454, -0.6137823, 0.6411567, 0.6094348, 0.4663768, -0.8581604, -0.9888306, 1.176527)
+bone_name = "hind3.r.001"
+bone_idx = 15
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Armature/Skeleton3D/BoneAttachment3D4" index="0" unique_id=1797999075]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 0.9999999, 0, 0, 0)
+mesh = SubResource("SphereMesh_fayhq")
+
+[node name="SodRemoteTransform3D" type="Node3D" parent="." index="1" unique_id=1706192250 node_paths=PackedStringArray("Following")]
+editor_description = "SOD Animator for a 3D Node. This node will follow / interpolate to another Node3D's transform (with options to enable following position, rotation, and scale individually) using a SOD system 
+which can be configured with the 'Params' property."
+transform = Transform3D(0.9998854, 0, 0, 0, 1, 0, 0, 0, 0.9998854, -6.301736e-17, 6.950014e-23, -5.1029467e-17)
+position = Vector3(-6.301736e-17, 6.950014e-23, -5.1029467e-17)
+top_level = true
+script = ExtResource("2_chri7")
+Following = NodePath("..")
+PositionParams = ExtResource("8_eo7wt")
+RotationParams = ExtResource("9_562vm")
+metadata/_custom_type_script = "uid://c6r6w6blmkr1w"
+
+[node name="Camera3D" type="Camera3D" parent="SodRemoteTransform3D" index="0" unique_id=101858017]
+transform = Transform3D(1, 0, 0, 0, 0.9659259, 0.25881904, 0, -0.25881904, 0.9659259, 0, 0.7413827, 4.638958)
+
+[node name="RemoteTransform3D" type="RemoteTransform3D" parent="SodRemoteTransform3D" index="1" unique_id=290773412]
+remote_path = NodePath("../../Armature/Skeleton3D")

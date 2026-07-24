@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="SodParams" format=3 uid="uid://bhqk8om2cevab"]
+
+[ext_resource type="Script" uid="uid://cpyqqgoprjn5d" path="res://addons/SecondOrderDynamics/SodParams.cs" id="1_mxnvw"]
+
+[resource]
+script = ExtResource("1_mxnvw")
+Frequency = 3.0
+Zeta = 0.5
+Response = 1.0
+metadata/_custom_type_script = "uid://cpyqqgoprjn5d"

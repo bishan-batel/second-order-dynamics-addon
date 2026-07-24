@@ -6,9 +6,8 @@
 
 [sub_resource type="Resource" id="Resource_153rd"]
 script = ExtResource("2_153rd")
-Frequency = 2.0
 Zeta = 0.5
-Response = 1.0
+Response = 5.0
 metadata/_custom_type_script = "uid://cpyqqgoprjn5d"
 
 [sub_resource type="Resource" id="Resource_pbopk"]
@@ -20,17 +19,17 @@ metadata/_custom_type_script = "uid://cpyqqgoprjn5d"
 [node name="Transform2d" type="Node2D" unique_id=1626683008]
 
 [node name="Anchor" type="Marker2D" parent="." unique_id=1888575354]
-position = Vector2(594, 252)
-rotation = -0.75999343
+position = Vector2(666, 366)
 
 [node name="SodRemoteTransform2D" type="Node2D" parent="." unique_id=2072307890 node_paths=PackedStringArray("Following")]
-position = Vector2(594, 252)
-rotation = -0.75999343
+editor_description = "SOD Animator for a 3D Node. This node will follow / interpolate to another Node3D's transform (with options to enable following position, rotation, and scale individually) using a SOD system 
+which can be configured with the 'Params' property."
+position = Vector2(665.9998, 365.99985)
 script = ExtResource("1_153rd")
 Following = NodePath("../Anchor")
 PositionParams = SubResource("Resource_153rd")
+UpdateRotation = false
 RotationParams = SubResource("Resource_pbopk")
-RunInEditor = true
 metadata/_custom_type_script = "uid://bjixespgf4ybd"
 
 [node name="SodParams" type="Sprite2D" parent="SodRemoteTransform2D" unique_id=523883890]

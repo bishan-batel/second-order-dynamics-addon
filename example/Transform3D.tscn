@@ -64,9 +64,9 @@ metadata/_edit_lock_ = true
 [node name="SodRemoteTransform3D" type="Node3D" parent="RemotePosition3D Box Looking at you" unique_id=419958830 node_paths=PackedStringArray("Following")]
 editor_description = "SOD Animator for a 3D Node. This node will follow / interpolate to another Node3D's transform (with options to enable following position, rotation, and scale individually) using a SOD system 
 which can be configured with the 'Params' property."
-transform = Transform3D(0.9763762, -0.0040023536, -0.21528883, 0.0013991959, 0.99976164, -0.012240782, 0.2153196, 0.011652172, 0.9763162, 6.2151203, 0, 4.625893)
-position = Vector3(6.2151203, 0, 4.625893)
-rotation = Vector3(0.012242972, -0.21703802, 0.0013995287)
+transform = Transform3D(-0.2214812, -0.25000286, -0.94240886, -0.0008744589, 0.96647114, -0.25617883, 0.9750146, -0.055923052, -0.21430433, 2.4215696, 0, 6.0660524)
+position = Vector3(2.4215696, 0, 6.0660524)
+rotation = Vector3(0.25910836, -1.7943945, -0.0009047896)
 script = ExtResource("1_akvq2")
 Following = NodePath("../Target")
 PositionParams = SubResource("Resource_jjot6")
@@ -84,14 +84,14 @@ mesh = SubResource("BoxMesh_jjot6")
 metadata/_edit_lock_ = true
 
 [node name="Target" type="Marker3D" parent="RemotePosition3D Box Looking at you" unique_id=419163737]
-transform = Transform3D(0.9455554, 0.007108238, 0.32533857, 0, 0.99974597, -0.021843255, -0.32541597, 0.020654282, 0.9453305, 5.3868623, 0, 5.479883)
+transform = Transform3D(-0.14126971, -0.2603436, -0.9551066, 0, 0.9647812, -0.26298147, 0.98995376, -0.037151907, -0.13629691, 2.1579206, 0, 5.3206253)
 script = SubResource("GDScript_jjot6")
 
 [node name="LookAtSod" type="Node3D" parent="." unique_id=2050965604 node_paths=PackedStringArray("Following")]
 editor_description = "SOD Animator for a 3D Node. This node will follow / interpolate to another Node3D's transform (with options to enable following position, rotation, and scale individually) using a SOD system 
 which can be configured with the 'Params' property."
-transform = Transform3D(-0.94783145, 0, -0.31835663, 0, 0.99999994, 0, 0.31835663, 0, -0.94783145, 5.60112, 0, 0)
-rotation = Vector3(0, -2.8175528, 0)
+transform = Transform3D(-0.9788925, 0, -0.20363763, 0, 0.99999994, 0, 0.20363763, 0, -0.9788925, 5.60112, 0, 0)
+rotation = Vector3(0, -2.9364893, 0)
 script = ExtResource("1_akvq2")
 Following = NodePath("../LookAtConstraint3D")
 UpdatePosition = false
@@ -109,7 +109,7 @@ mesh = SubResource("BoxMesh_jjot6")
 metadata/_edit_lock_ = true
 
 [node name="LookAtConstraint3D" type="Node3D" parent="." unique_id=506267863 node_paths=PackedStringArray("Target")]
-transform = Transform3D(-0.9913059, 0, -0.13157716, 0, 0.99999994, 0, 0.13157716, 0, -0.9913059, 5.60112, 0, 0)
+transform = Transform3D(-0.8857057, 0, 0.46424687, 0, 0.99999994, 0, -0.46424687, 0, -0.8857057, 5.60112, 0, 0)
 script = ExtResource("3_it7vc")
 LookAtPosition = Vector3(-67.02, 36.94, 3.83)
 Target = NodePath("../RemotePosition3D Box Looking at you/SodRemoteTransform3D")

@@ -1,0 +1,53 @@
+[gd_scene format=3 uid="uid://di1fnkd2llqls"]
+
+[ext_resource type="PackedScene" uid="uid://p3675exf607s" path="res://example/spider3d/Spider.tscn" id="1_p4pof"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_p4pof"]
+sky_horizon_color = Color(0.66224277, 0.6717428, 0.6867428, 1)
+ground_horizon_color = Color(0.66224277, 0.6717428, 0.6867428, 1)
+
+[sub_resource type="Sky" id="Sky_564jw"]
+sky_material = SubResource("ProceduralSkyMaterial_p4pof")
+
+[sub_resource type="Environment" id="Environment_w30ie"]
+background_mode = 2
+sky = SubResource("Sky_564jw")
+glow_enabled = true
+
+[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_it642"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_it642"]
+albedo_texture = SubResource("PlaceholderTexture2D_it642")
+texture_filter = 0
+
+[node name="SpiderScene" type="Node3D" unique_id=1618375139]
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=1523216589]
+environment = SubResource("Environment_w30ie")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="." unique_id=2054146024]
+transform = Transform3D(-0.8660254, -0.43301278, 0.25, 0, 0.49999997, 0.86602545, -0.50000006, 0.75, -0.43301266, 0, 0, 0)
+shadow_enabled = true
+
+[node name="CSGBox3D" type="CSGBox3D" parent="." unique_id=2041312391]
+use_collision = true
+size = Vector3(20, 0.1, 20)
+material = SubResource("StandardMaterial3D_it642")
+
+[node name="CSGBox3D2" type="CSGBox3D" parent="." unique_id=425527889]
+transform = Transform3D(0.8660254, 0.5, 0, -0.5, 0.8660254, 0, 0, 0, 1, -3.1231782, 0.76789206, 0)
+use_collision = true
+size = Vector3(8, 0.1, 20)
+material = SubResource("StandardMaterial3D_it642")
+
+[node name="CSGBox3D3" type="CSGBox3D" parent="." unique_id=1728486137]
+transform = Transform3D(0.8660254, 0.25, 0.43301275, -0.33781746, 0.93102396, 0.13810807, -0.3686182, -0.26588428, 0.8907447, -3.079398, 0.76789206, 2.5385032)
+use_collision = true
+size = Vector3(8, 0.1, 20)
+material = SubResource("StandardMaterial3D_it642")
+
+[node name="Spider" parent="." unique_id=477848417 instance=ExtResource("1_p4pof")]
+transform = Transform3D(0.1597102, 0, 0.987164, 0, 1, 0, -0.987164, 0, 0.1597102, 6.928167, 1.4405868, 3.3286579)
+ankle_height = 0.0
+max_foot_distance = 1.0
+speed = 3.0
